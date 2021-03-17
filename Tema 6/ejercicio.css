@@ -1,0 +1,84 @@
+#main-container {
+  font-family: Helvetica;
+}
+
+#logo,
+#personal,
+#small,
+#enterprise {
+  float: left;
+  margin-left: 20px;
+}
+#logo,
+#nav-bar a {
+  margin-left: 10px;
+}
+#nav-bar {
+  border-top: 2px solid gray;
+}
+#heading {
+  position: relative;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.image-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#price-chart {
+  text-align: center;
+  margin-left: 30%;
+}
+
+.prices {
+  color: white;
+  padding: 5%;
+}
+.price {
+  font-size: 56px;
+  margin-bottom: 0px;
+  margin-top: 0px;
+}
+
+#personal .prices {
+  background-color: rgb(81, 146, 81);
+}
+
+#small .prices {
+  background-color: rgb(44, 73, 133);
+}
+
+#enterprise .prices {
+  background-color: rgb(0, 0, 0);
+}
+
+.features {
+  background-color: rgb(247, 247, 247);
+  /* padding: 5%; */
+}
+
+.features p {
+  margin: 0px;
+  padding: 2% 5% 0% 0%;
+}
+.features p,
+.buttons {
+  border-bottom: 1px solid rgb(238, 238, 238);
+  border-right: 1px solid rgb(238, 238, 238);
+  border-left: 1px solid rgb(238, 238, 238);
+}
+.buttons {
+  padding:10%
+}
+.buttons input {
+  border-radius: 12px;
+  background-color:white;
+  font-weight: bold;
+  
+}

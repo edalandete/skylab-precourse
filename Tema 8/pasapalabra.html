@@ -1,0 +1,101 @@
+<!DOCTYPE html> 
+<html>
+  <head>
+    <title>Pasapalabra</title>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="pasapalabra.js"></script>
+    <link rel="stylesheet" href="pasapalabra.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.1/css/all.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi&display=swap" rel="stylesheet">
+  </head>
+  <title>Pasapalabra</title>
+ 
+  <body>
+    <div class="game">
+      <div><h1>Pasapalabra</h1></div>
+      <div class="start-screen">
+        <div class="game-faq">
+          <h2>BIENVENIDOS AL JUEGO DE PASAPALABRA DE SKYLAB CODERS ACADEMY</h2>
+          <p>Basado en el exitoso concurso de televisión creado por la cadena británica ITV que podemos ver en España gracias a Atresmedia llega a Skylab a través de uno de los challenges del precurso.</p>
+          <p>Se mostrarán unas definiciones por pantalla de la A a la Z donde el usuario tendrá que contestar la palabra a la cual se refiere la definición. 
+          En caso de acertar la respuesta, la redonda de la letra de referencia cambiará a color VERDE, en caso de fallo, esta pasará a color ROJO finalmente, si el jugador decide pasar se mantendrá el color azúl.</p>
+          <p>El programa permite enviar la palabra pulsando la tecla ENTER del teclado del ordenador o pulsando el botón de ENVIAR RESPUESTA<br />Para pasar a la siguiente palabra sin contestar, se debe escribir PASAPALABRA o pulsar el botón análogo<br />Para finalizar el juego antes de contestar todas las palabras, debe escribir END o pulsar el botón análogo.</p>
+        </div>
+        <div class="center">
+          <button id="start-game" class="normal-button"><i class="fas fa-ambulance"></i>Iniciar Partida</button>
+        </div>
+      </div>
+      <div class="main-menu" class="center">
+        <label for="player-name">Nombre del jugador</label>
+        <input type="text" placeholder="Jugador" id="player-name"/><br />
+        <button id="init-game" class="normal-button"><i class="fa fa-play"></i>Jugar</button>
+      </div>
+      <div>
+        <div class="timer"> 150</div>
+        <ul class="donut">
+          <li id="a" class="circle unanswered letterA">A</li>
+          <li id="b" class="circle unanswered letterB">B</li>
+          <li id="c" class="circle unanswered letterC">C</li>
+          <li id="d" class="circle unanswered letterD">D</li>
+          <li id="e" class="circle unanswered letterE">E</li>
+          <li id="f" class="circle unanswered letterF">F</li>
+          <li id="g" class="circle unanswered letterG">G</li>
+          <li id="h" class="circle unanswered letterH">H</li>
+          <li id="i" class="circle unanswered letterI">I</li>
+          <li id="j" class="circle unanswered letterJ">J</li>
+          <li id="l" class="circle unanswered letterL">L</li>
+          <li id="m" class="circle unanswered letterM">M</li>
+          <li id="n" class="circle unanswered letterN">N</li>
+          <li id="ñ" class="circle unanswered letterÑ">Ñ</li>
+          <li id="o" class="circle unanswered letterO">O</li>
+          <li id="p" class="circle unanswered letterP">P</li>
+          <li id="q" class="circle unanswered letterQ">Q</li>
+          <li id="r" class="circle unanswered letterR">R</li>
+          <li id="s" class="circle unanswered letterS">S</li>
+          <li id="t" class="circle unanswered letterT">T</li>
+          <li id="u" class="circle unanswered letterU">U</li>
+          <li id="v" class="circle unanswered letterV">V</li>
+          <li id="x" class="circle unanswered letterX">X</li>
+          <li id="y" class="circle unanswered letterY">Y</li>
+          <li id="z" class="circle unanswered letterZ">Z</li>
+        </ul>
+      </div>
+      <div class="player-space">
+        <div id="question"></div>
+        <div id="answer-container">
+          <input type="text" id="answer" placeholder="INTRODUCE RESPUESTA"></input>
+        </div>
+        <div class="play-buttons">
+          <button id="send-answer" class="normal-button"><i class="fa fa-play"></i>Enviar Respuesta</button>
+          <button id="next-question" class="normal-button"><i class="fa fa-forward"></i>Pasapalabra</button>
+          <button id="end-game" class="normal-button"><i class="fa fa-stop"></i>Finalizar Juego</button>
+        </div>
+      </div>
+
+      <div class="player-results">
+        <div>
+          <h2>RESULTADO: </h2>
+          <div id="current-player-result"></div>
+          <button id="show-ranking" class="normal-button"><i class="fa fa-trophy"></i>Ver Ranking</button>
+        </div>
+      </div>
+
+      <div class="ranking">
+        <h2>RANKING DE PASAPALABRA</h2>
+        <table id="ranking-table">
+            <tr class="table-header"> 
+              <th>NOMBRE DEL JUGADOR</th>
+              <th>ACIERTOS</th>
+              <th>FALLOS</th>
+            </tr>
+        </table>
+      </div>
+      <div class="end-game-buttons">
+        <button id="replay" class="normal-button"><i class="fa fa-play"></i>Jugar de nuevo</button>
+        <button id="back-to-menu" class="normal-button"><i class="fa fa-bars"></i>Volver al menú</button>
+      </div>
+    </div>
+    
+  </body>
+</html>

@@ -1,0 +1,82 @@
+.calculator {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  min-height: 700px;
+  width: 500px;
+  padding: 15px;
+  font: bold 50px "Reem Kufi", sans-serif;
+  margin: 0 auto;
+}
+
+.row {
+  display: inherit;
+  width: 100%;
+  flex: 1 1 auto;
+  height: 100px;
+}
+
+.button50 {
+  display: inherit;
+  width: 50%;
+}
+
+.button25 {
+  display: inherit;
+  width: 25%;
+}
+
+#screen {
+  display: inherit;
+  height: 200px;
+  flex: 1;
+  background-color: black;
+  color: white;
+  font-size: 50px;
+  width: 100%;
+  overflow-wrap: break-word;
+}
+#keyboard {
+  width: 100%;
+  max-height: 100%;
+  display: inherit;
+  flex: 1 1 auto;
+  flex-direction: column;
+}
+
+.normalButton,
+.operatorButton,
+.operatorSelected {
+  border: solid 1px rgb(181, 181, 181);
+  padding: 12px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+}
+.normalButton {
+  font-size: 50px;
+  background-color: rgb(221, 221, 221);
+  color: black;
+}
+
+.normalButton:hover {
+  background-color: rgb(109, 109, 109);
+}
+
+.operatorButton {
+  background-color: rgb(240, 142, 51);
+  color: white;
+  font-size: 50px;
+}
+
+.operatorButton:hover {
+  background-color: rgb(235, 122, 16);
+}
+
+.operatorSelected {
+  background-color: white;
+  color: rgb(240, 142, 51);
+}

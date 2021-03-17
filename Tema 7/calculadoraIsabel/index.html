@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+        content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="index.css" type="text/css" rel="stylesheet">
+    <title>Calculator Skylab</title>
+
+</head>
+
+<body>
+    <table class="table">
+        <thead class="head">
+            <tr>
+                <th class="screen" colspan="4">0</th>
+            </tr>
+        </thead>
+        <tbody class="body">
+            <tr>
+                <td class="reset" onclick="getReset()">AC</td>
+                <td class="delete" onclick="deleteElement()">&#x232b;</td>
+                <td class="percentage operators" onclick="percentage(this)">%</td>
+                <td class="operators" value="/" onclick="sizeResult(this)">÷</td>
+            </tr>
+            <tr>
+                <td value="7" onclick="sizeResult(this)">7</td>
+                <td value="8" onclick="sizeResult(this)">8</td>
+                <td value="9" onclick="sizeResult(this)">9</td>
+                <td class="multi operators" value="*" onclick="sizeResult(this)">&#x2715;</td>
+            </tr>
+            <tr>
+                <td value="4" onclick="sizeResult(this)">4</td>
+                <td value="5" onclick="sizeResult(this)">5</td>
+                <td value="6" onclick="sizeResult(this)">6</td>
+                <td class="operators" value="-" onclick="sizeResult(this)">-</td>
+            </tr>
+            <tr>
+                <td value="1" onclick="sizeResult(this)">1</td>
+                <td value="2" onclick="sizeResult(this)">2</td>
+                <td value="3" onclick="sizeResult(this)">3</td>
+                <td class="operators" value="+" onclick="sizeResult(this)">+</td>
+            </tr>
+            <tr>
+                <td class="zero" value="0" colspan="2" onclick="sizeResult(this)">0</td>
+                <td value="." onclick="sizeResult(this)">,</td>
+                <td class="operators" onclick="equal(this)">=</td>
+            </tr>
+
+        </tbody>
+    </table>
+
+</body>
+<script src="index.js" type="text/javascript"></script>
+
+</html>
