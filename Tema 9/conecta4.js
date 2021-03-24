@@ -18,6 +18,12 @@ let domBoard = [];
 let game = {};
 let domRows = [];
 
+const insertRandomPiece = (possibleCells) => {
+  const cell = possibleCells[Math.floor(Math.random() * possibleCells.length)];
+  const column = game.board[cell.positionX];
+  return insertPiece(column, cell);
+};
+
 const goodBye = () => {
   hide(".game-results");
   playSound("mrBlueSky.mp3");
@@ -41,6 +47,7 @@ const restart = () => {
   game.turns = 1;
   game.playerTurn = PLAYER_1;
   hide(".game-results");
+  setPlayerColor(true);
 };
 
 const setEndGameMesage = (isWinner) => {
@@ -72,6 +79,65 @@ const endGame = (isWinner) => {
   document.getElementById("stop").addEventListener("click", goodBye);
 };
 
+const changeCell = (cell, pieceType) => {
+  cell.piece = pieceType;
+};
+const canWin = (cell, player) => {
+  const column = game.board[cell.positionX];
+  const row = getRowByCell(cell);
+  changeCell(cell, player);
+  return checkWin(column, row, cell, player);
+};
+
+const insertPieceCPU = (possibleCells, player) => {
+  let isPieceInserted = false;
+  try {
+    possibleCells.forEach((cell) => {
+      if (canWin(cell, player)) {
+        const column = game.board[cell.positionX];
+        isPieceInserted = insertPiece(column, cell);
+        throw new Error("Exit forEach, inserted piece");
+      } else {
+        changeCell(cell, EMPTY_CELL);
+      }
+    });
+  } catch (error) {
+    console.error(error.message);
+  }
+  return isPieceInserted;
+};
+
+const getAllPossibleCells = () => {
+  const possibleCells = [];
+  game.board.forEach((column) => {
+    if (!isColumnFull(column)) {
+      const cell = column.find((cell) => cell.piece === EMPTY_CELL);
+      possibleCells.push(cell);
+    }
+  });
+  return possibleCells;
+};
+
+const autoPlay = () => {
+  let isPieceInserted = false;
+  const possibleCells = getAllPossibleCells();
+  isPieceInserted = insertPieceCPU(possibleCells, PLAYER_CPU);
+  if (!isPieceInserted) {
+    isPieceInserted = insertPieceCPU(possibleCells, PLAYER_1);
+  } else {
+    endGame(true);
+  }
+
+  if (!isPieceInserted) {
+    isPieceInserted = insertRandomPiece(possibleCells);
+    if (isPieceInserted) {
+      nextPlayer();
+    }
+  } else {
+    nextPlayer();
+  }
+};
+
 const nextPlayer = () => {
   game.turns++;
   if (game.playerTurn === PLAYER_1) {
@@ -79,6 +145,7 @@ const nextPlayer = () => {
   } else {
     game.playerTurn = PLAYER_1;
   }
+  setPlayerColor(true);
 };
 
 const isTie = () => {
@@ -185,13 +252,13 @@ const isVerticalWin = (column, playerTurn) => {
   return isLineWin(column, playerTurn);
 };
 
-const checkWin = (column, row, cell) => {
+const checkWin = (column, row, cell, playerToCheck) => {
   let isWinner = false;
-  if (isVerticalWin(column, game.playerTurn)) {
+  if (isVerticalWin(column, playerToCheck)) {
     isWinner = true;
-  } else if (isHorizontalWin(row, game.playerTurn)) {
+  } else if (isHorizontalWin(row, playerToCheck)) {
     isWinner = true;
-  } else if (isDiagonalWin(cell, game.playerTurn)) {
+  } else if (isDiagonalWin(cell, playerToCheck)) {
     isWinner = true;
   }
 
@@ -217,6 +284,11 @@ const updateCell = (cell) => {
   }
 };
 
+const playSound = (soundName) => {
+  const tmpStartSound = new Audio(`sounds/${soundName}`);
+  tmpStartSound.play();
+};
+
 const isColumnFull = (column) => {
   return column.every((cell) => cell.piece !== EMPTY_CELL);
 };
@@ -234,20 +306,45 @@ const insertPiece = (column, cell) => {
   return isCellUpdated;
 };
 
+const getWinner = (column, isCellUpdated, cell) => {
+  let isWinner = false;
+
+  if (game.turns >= 7 && isCellUpdated) {
+    const row = getRowByCell(cell);
+    isWinner = checkWin(column, row, cell, game.playerTurn);
+  }
+  return isWinner;
+};
+
 const play = (colIndex) => {
   const column = game.board[colIndex];
   const cell = column.find((cell) => cell.piece === EMPTY_CELL);
   let isWinner = false;
   let isCellUpdated = insertPiece(column, cell);
-  if (game.turns >= 7 && isCellUpdated) {
-    const row = getRowByCell(cell);
-    isWinner = checkWin(column, row, cell);
-  }
+
+  isWinner = getWinner(column, isCellUpdated, cell);
 
   if (isCellUpdated && !isWinner && !isTie()) {
     nextPlayer();
   } else if (isWinner || isTie()) {
     endGame(isWinner);
+  }
+  if (game.playerTurn === PLAYER_CPU && game.isCpu) {
+    setTimeout(autoPlay, 1000);
+  }
+};
+
+const setPlayerColor = (isLoadedGame) => {
+  const playerTurn = document.getElementById("player-turn");
+  if (!isLoadedGame) {
+    playerTurn.classList.remove("empty-cell");
+  }
+  if (game.playerTurn === PLAYER_1) {
+    playerTurn.classList.remove("player2-cell");
+    playerTurn.classList.add("player1-cell");
+  } else {
+    playerTurn.classList.remove("player1-cell");
+    playerTurn.classList.add("player2-cell");
   }
 };
 
@@ -259,7 +356,7 @@ const createCell = (rows, cols) => {
   };
 };
 
-const createBoardGame = () => {
+const createBoardGame = (isCpu) => {
   const boardGame = [];
   domBoard.forEach((column, colIndex) => {
     const row = [];
@@ -278,6 +375,7 @@ const createBoardGame = () => {
       playerTwoWins: 0,
       playerTwoLoses: 0,
     },
+    isCpu: isCpu,
   };
 };
 
@@ -303,9 +401,19 @@ const getDOMRows = () => {
   return Array.from(rows).reverse();
 };
 
-const playSound = (soundName) => {
-  const tmpStartSound = new Audio(`sounds/${soundName}`);
-  tmpStartSound.play();
+const loadGame = (isCpu) => {
+  hide(".game-mode");
+  domRows = getDOMRows();
+  domBoard = getDomBoard(domRows);
+  game = createBoardGame(isCpu);
+  setPlayerColor(false);
+  for (let i = 0; i < MAX_COLUMNS; i++) {
+    document.getElementById("col" + i).addEventListener("click", () => play(i));
+  }
+
+  document
+    .getElementById("close-full-column-modal")
+    .addEventListener("click", () => hide(".full-column"));
 };
 
 const show = (elementToHide) => {
@@ -318,23 +426,21 @@ const hide = (elementToHide) => {
   element.classList.add("hidden");
 };
 
-const loadGame = () => {
+const selectGameMode = () => {
   hide(".user-interaction-warning");
-  domRows = getDOMRows();
-  domBoard = getDomBoard(domRows);
-  game = createBoardGame();
-
-  for (let i = 0; i < MAX_COLUMNS; i++) {
-    document.getElementById("col" + i).addEventListener("click", () => play(i));
-  }
-
+  show(".game-mode");
   document
-    .getElementById("close-full-column-modal")
-    .addEventListener("click", () => hide(".full-column"));
+    .getElementById("one-player")
+    .addEventListener("click", () => loadGame(true));
+  document
+    .getElementById("two-players")
+    .addEventListener("click", () => loadGame(false));
 };
 
-const acceptSound = (number) => {
-  document.getElementById("play-game").addEventListener("click", loadGame);
+const acceptSound = () => {
+  document
+    .getElementById("play-game")
+    .addEventListener("click", selectGameMode);
 };
 
 document.addEventListener("DOMContentLoaded", acceptSound);

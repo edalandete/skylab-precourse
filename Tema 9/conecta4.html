@@ -31,6 +31,20 @@
           </button>
         </div>
       </div>
+      <div class="game-mode hidden">
+        <div class="modal-window">
+          <h2>QUE MODO DE JUEGO QUIERES:</h2>
+          <div class="game-mode-buttons">
+            <button id="one-player" class="button-no-style">
+              <i class="fas fa-user fa-3x"></i>
+            </button>
+            <button id="two-players" class="button-no-style">
+              <i class="fas fa-user fa-3x"></i>
+              <i class="fas fa-user fa-3x"></i>
+            </button>
+          </div>
+        </div>
+      </div>
       <div class="board">
         <div class="insert-piece-button">
           <div class="button">
@@ -123,6 +137,10 @@
           <div class="cell empty-cell"></div>
           <div class="cell empty-cell"></div>
         </div>
+      </div>
+      <div>
+        <p>TURNO DE:</p>
+        <div id="player-turn" class="cell empty-cell"></div>
       </div>
     </div>
     <div class="game-results hidden">
