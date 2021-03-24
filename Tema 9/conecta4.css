@@ -20,7 +20,8 @@ body {
 .user-interaction-warning,
 .game-results,
 .full-column,
-.special-thanks {
+.special-thanks,
+.game-mode {
   display: flex;
   position: absolute;
   flex-direction: column;
@@ -87,7 +88,8 @@ i {
   color: #eeeeee;
 }
 
-.end-game-buttons {
+.end-game-buttons,
+.game-mode-buttons {
   display: flex;
   justify-content: space-around;
 }
